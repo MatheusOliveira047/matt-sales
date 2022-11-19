@@ -20,12 +20,6 @@ const useStyles = makeStyles((theme)=> ({
     margin:'30px auto',
     display:'block',
   },
-  cards:{
-    margin:5
-  },
-  cardMedia:{
-    paddingTop: '56%',
-  }
 }))
 
 export default function Home() {
