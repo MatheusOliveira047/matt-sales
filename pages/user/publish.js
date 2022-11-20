@@ -4,12 +4,46 @@ import {
   Box,
   TextField,
   Select,
-  Button
+  Button,
+  IconButton
 } from '@mui/material'
+
+import { useDropzone } from 'react-dropzone';
+
+import { useState } from 'react'
+
+import { DeleteForever } from '@mui/icons-material';
+
 import TemplateDefault from '../../src/templetes/Default'
 import theme from '../../src/theme';
 
 export default function Publish(){
+  const [files,setFiles] = useState([])
+
+
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: 'image/*',
+    onDrop: (acceptedFile) =>{
+      const newFiles = acceptedFile.map(file=>{
+        return Object.assign(file,{
+          preview:URL.createObjectURL(file)
+        })
+      })
+
+
+      setFiles([
+        ...files,
+        ...newFiles
+      ])
+    }
+  })
+
+  const handleRemoveFile = (fileName)=>{
+    const newFilesState = files.filter(file => file.name !== fileName)
+    setFiles(newFilesState)
+  }
+
+
   return(
     <TemplateDefault>
       <Container maxWidth="sm" sx={{ padding: theme.spacing(8,0,6) }}>
@@ -73,6 +107,89 @@ export default function Publish(){
         <Typography component={'div'} variant="body2" sx={{ marginBottom:'5px' }} color='primary'>
            A primeira imagem é a foto principal do seu anúncio.
         </Typography>
+        <Box 
+          sx={{
+            display:'flex',
+            flexWrap:'wrap',
+          }}
+        >
+          <Box
+          {...getRootProps()}
+
+            sx={{
+              width:200, 
+              height:150, 
+              backgroundColor: theme.palette.background.default,
+              border:'2px dashed black',
+              display:'flex',
+              justifyContent:"center",
+              alignItems:'center',
+              textAlign:'center',
+              padding:5,
+              margin: '0 5px 10px 0'
+            }}
+          >
+            <input {...getInputProps()}/>
+
+            <Typography variant='body2'>
+              Clique para adicionar ou arraste a ímagem para aqui
+            </Typography>
+          </Box>
+          {files.map((file,index) =>(
+             <Box
+             key={file}
+             sx={{
+               width:200,
+               height:150,
+               margin: '0 5px 10px 0',
+               position:'relative',
+               backgroundSize:'cover',
+               backgroundPosition:'center center',
+               backgroundImage: `url(${file.preview})`,
+               '&:hover .boxPhoto':{
+                 display:'flex',
+               },
+               '& .boxPhoto':{
+                 backgroundColor:'rgba(0,0,0,0.7)',
+                 height:'100%',
+                 width:'100%',
+                 display:'none',
+                 justifyContent:'center',
+                 alignItems:'center',
+                 textAlign:'center',
+               },
+               '& .textPri':{
+                 position:'absolute',
+                 bottom:0,
+                 left:0,
+                 backgroundColor:'blue',
+                 padding:"6px 10px",
+                 borderRadius: '0 6px 0 0'
+               }
+             }}
+           >
+            {
+              index === 0 
+              ? <Box className='textPri' >
+                  <Typography variant='body2' color='secondary'>
+                    Principal
+                  </Typography>
+                </Box>
+             : ''
+            }
+           
+             <Box className='boxPhoto'>
+               <IconButton onClick={()=>handleRemoveFile(file.name)} color="secondary">
+                 <DeleteForever fontSize='large'/>
+               </IconButton>
+             </Box>
+           </Box>
+            ))
+          }
+         
+
+
+        </Box>
         </Box>
       </Container>
 
@@ -123,8 +240,6 @@ export default function Publish(){
           <Button variant='contained' color='primary'>Publicar anúncio</Button>
         </Box>
       </Container>
-
-
 
 
     </TemplateDefault>
