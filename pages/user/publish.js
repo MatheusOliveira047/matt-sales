@@ -5,7 +5,11 @@ import {
   TextField,
   Select,
   Button,
-  IconButton
+  IconButton,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment
 } from '@mui/material'
 
 import { useDropzone } from 'react-dropzone';
@@ -206,6 +210,26 @@ export default function Publish(){
           rows={6}
           fullWidth
         />
+        </Box>
+      </Container>
+
+      <Container maxWidth="md" sx={{ paddingBottom: theme.spacing(3) }}>
+        <Box sx={{ bgcolor: theme.palette.background.white, padding: '10px' }}> 
+        <Typography component={'h6'} variant="h6" sx={{ marginBottom:'5px' }} color='primary'>
+           Preço
+        </Typography>
+          <br />
+          <FormControl
+          fullWidth
+          variant='outlined'
+          >
+            <InputLabel>Valor</InputLabel>
+            <OutlinedInput 
+              onChange={()=>{}} 
+              startAdornment={<InputAdornment position='start'>R$</InputAdornment>}
+              labelWidth={40} 
+            />
+          </FormControl>
         </Box>
       </Container>
 
