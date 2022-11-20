@@ -1,42 +1,59 @@
-import TemplateDefault from '../../src/templetes/Default'
-import { 
+import {
   Container,
   Typography,
-  Button,
+  InputBase,
+  IconButton,
+  Paper,
   Grid,
-  Card,
-  CardMedia,
   CardContent,
-  CardActions,
-} from '@mui/material';
+  CardMedia,
+  Card
+  
+} from '@mui/material'
 
-import { makeStyles } from '@mui/styles';
+import theme from '../src/theme'
 
-const useStyles = makeStyles((theme)=> ({
+import SearchIcon from '@mui/icons-material/Search'
+import TempleteDefault from '../src/templetes/Default'
+import { makeStyles } from '@mui/styles'
+
+const useStyles = makeStyles((theme)=>({
   container:{
-    padding: theme.spacing(8,0,6),
-    },
-  button:{
-    margin:'30px auto',
-    display:'block',
+    padding: theme.spacing(8,0,0)
+  },
+  boxSearch:{
+    
+    display:'flex',
+    padding: theme.spacing(0, 2),
+    marginTop:'20px',
+    borderRadius: '10px'
   },
 }))
 
-export default function Dashbord() {
+const Home = ()=>{
   const classes = useStyles()
-  return (
-    <TemplateDefault>
-      <Container className={classes.container} maxWidth="sm">
-        <Typography component={'h1'} variant="h2" align='center'>
-          Meus Anúncios
+  return(
+    <TempleteDefault>
+      <Container maxWidth="md" className={classes.container}>
+        <Typography component={'h1'} variant="h3" align='center'>
+         O que deseja encontrar ?
         </Typography>
-        <Button variant='contained' color='primary' className={classes.button}>
-          Publicar novo anúncio
-        </Button>
+        <Paper className={classes.boxSearch}>
+        <InputBase
+        fullWidth
+        placeholder="Ex... Iphone XS com garantia"
+      />
+      <IconButton type="button" sx={{ p: '10px' }}>
+        <SearchIcon />
+      </IconButton>
+        </Paper>
 
       </Container>
-      <Container maxWidth="md"> 
-        <Grid container spacing={4}>
+      <Container maxWidth="md" className={classes.container}>
+      <Typography component={'h2'} variant="h4" align='center'>
+         Destaques
+        </Typography>
+      <Grid container spacing={4}>
           
           <Grid item xs={12} sm={6} md={4}>
               <Card>
@@ -53,10 +70,6 @@ export default function Dashbord() {
                     R$ 60,00
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button size='small' color='primary'>Editar</Button>
-                  <Button size='small' color='primary'>Remover</Button>
-                </CardActions>
               </Card>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -74,10 +87,6 @@ export default function Dashbord() {
                     R$ 60,00
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button size='small' color='primary'>Editar</Button>
-                  <Button size='small' color='primary'>Remover</Button>
-                </CardActions>
               </Card>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -95,14 +104,13 @@ export default function Dashbord() {
                     R$ 60,00
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button size='small' color='primary'>Editar</Button>
-                  <Button size='small' color='primary'>Remover</Button>
-                </CardActions>
               </Card>
           </Grid>
         </Grid>
       </Container>
-    </TemplateDefault>
-  );
+    </TempleteDefault>
+  )
+
 }
+
+export default Home
