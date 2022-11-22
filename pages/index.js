@@ -15,20 +15,14 @@ import theme from '../src/theme'
 
 import SearchIcon from '@mui/icons-material/Search'
 import TempleteDefault from '../src/templetes/Default'
-import { makeStyles } from '@mui/styles'
+import { makeStyles,styled } from '@mui/styles'
 
 const useStyles = makeStyles((theme)=>({
   container:{
     padding: theme.spacing(8,0,0)
   },
-  boxSearch:{
-    
-    display:'flex',
-    padding: theme.spacing(0, 2),
-    marginTop:'20px',
-    borderRadius: '10px'
-  },
 }))
+
 
 const Home = ()=>{
   const classes = useStyles()
@@ -38,7 +32,15 @@ const Home = ()=>{
         <Typography component={'h1'} variant="h3" align='center'>
          O que deseja encontrar ?
         </Typography>
-        <Paper className={classes.boxSearch}>
+
+        <Paper
+        sx={{
+          display:'flex',
+          padding: theme.spacing(1),
+          marginTop:'15px',
+          borderRadius: '8px'
+        }}
+        >
         <InputBase
         fullWidth
         placeholder="Ex... Iphone XS com garantia"
@@ -49,7 +51,7 @@ const Home = ()=>{
         </Paper>
 
       </Container>
-      <Container maxWidth="md" className={classes.container}>
+      <Container maxWidth="lg" className={classes.container}>
       <Typography component={'h2'} variant="h4" align='center'>
          Destaques
         </Typography>
