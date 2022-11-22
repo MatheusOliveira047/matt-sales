@@ -10,27 +10,23 @@ import {
   CardActions,
 } from '@mui/material';
 
-import { makeStyles } from '@mui/styles';
 
-const useStyles = makeStyles((theme)=> ({
-  container:{
-    padding: theme.spacing(8,0,6),
-    },
-  button:{
-    margin:'30px auto',
-    display:'block',
-  },
-}))
 
 export default function Dashbord() {
-  const classes = useStyles()
   return (
     <TemplateDefault>
-      <Container className={classes.container} maxWidth="sm">
+      <Container maxWidth="sm">
         <Typography component={'h1'} variant="h2" align='center'>
           Meus Anúncios
         </Typography>
-        <Button variant='contained' color='primary' className={classes.button}>
+        <Button 
+          variant='contained' 
+          color='primary' 
+          sx={{
+            margin:'30px auto',
+            display:'block',
+          }}
+        >
           Publicar novo anúncio
         </Button>
 

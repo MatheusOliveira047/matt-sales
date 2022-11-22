@@ -50,7 +50,7 @@ export default function Publish(){
 
   return(
     <TemplateDefault>
-      <Container maxWidth="sm" sx={{ padding: theme.spacing(8,0,6) }}>
+      <Container maxWidth="sm" sx={{ paddingBottom: theme.spacing(3) }}>
         <Typography component={'h1'} variant="h2" align='center' color='primary'>
             Publicar Anúncio!
         </Typography>
@@ -58,6 +58,7 @@ export default function Publish(){
             Quanto mais detalhado, melhor!
         </Typography>
       </Container>
+
       <Container maxWidth="md" sx={{ paddingBottom: theme.spacing(3) }}>
 
         <Box sx={{ bgcolor: theme.palette.background.white, padding: '10px' }}>

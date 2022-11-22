@@ -13,7 +13,6 @@ export default function Footer(){
       component={"footer"}
       sx={{
         borderTop: `1px solid black`,
-        marginTop: theme.spacing(8),
         paddingTop: theme.spacing(3),
         paddingBottom: theme.spacing(3),
         [theme.breakpoints.up('sm')]:{

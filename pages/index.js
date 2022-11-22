@@ -15,20 +15,13 @@ import theme from '../src/theme'
 
 import SearchIcon from '@mui/icons-material/Search'
 import TempleteDefault from '../src/templetes/Default'
-import { makeStyles,styled } from '@mui/styles'
 
-const useStyles = makeStyles((theme)=>({
-  container:{
-    padding: theme.spacing(8,0,0)
-  },
-}))
 
 
 const Home = ()=>{
-  const classes = useStyles()
   return(
     <TempleteDefault>
-      <Container maxWidth="md" className={classes.container}>
+      <Container maxWidth="md" >
         <Typography component={'h1'} variant="h3" align='center'>
          O que deseja encontrar ?
         </Typography>
@@ -51,7 +44,11 @@ const Home = ()=>{
         </Paper>
 
       </Container>
-      <Container maxWidth="lg" className={classes.container}>
+      <Container maxWidth="lg" 
+        sx={{
+          paddingTop: theme.spacing(6)
+        }}
+      >
       <Typography component={'h2'} variant="h4" align='center'>
          Destaques
         </Typography>
