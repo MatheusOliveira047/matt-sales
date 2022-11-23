@@ -5,11 +5,9 @@ import {
   IconButton,
   Paper,
   Grid,
-  CardContent,
-  CardMedia,
-  Card
-  
 } from '@mui/material'
+
+import CardProdutcs from '../src/components/Card'
 
 import theme from '../src/theme'
 
@@ -54,57 +52,22 @@ const Home = ()=>{
         </Typography>
       <Grid container spacing={4}>
           
-          <Grid item xs={12} sm={6} md={4}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  image={'https://source.unsplash.com/random'}
-                  alt="green iguana"
-                 />
-                <CardContent>
-                  <Typography variant='h5' component={'h2'}>
-                    Produto x
-                  </Typography>
-                  <Typography>
-                    R$ 60,00
-                  </Typography>
-                </CardContent>
-              </Card>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  image={'https://source.unsplash.com/random'}
-                  alt="green iguana"
-                 />
-                <CardContent>
-                  <Typography variant='h5' component={'h2'}>
-                    Produto x
-                  </Typography>
-                  <Typography>
-                    R$ 60,00
-                  </Typography>
-                </CardContent>
-              </Card>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  image={'https://source.unsplash.com/random'}
-                  alt="green iguana"
-                 />
-                <CardContent>
-                  <Typography variant='h5' component={'h2'}>
-                    Produto x
-                  </Typography>
-                  <Typography>
-                    R$ 60,00
-                  </Typography>
-                </CardContent>
-              </Card>
-          </Grid>
+          <CardProdutcs
+            image={"https://source.unsplash.com/random"}
+            nameProdutc={'Produto x'}
+            price={'60,00'}
+          />
+          <CardProdutcs
+            image={"https://source.unsplash.com/random"}
+            nameProdutc={'Produto x'}
+            price={'60,00'}
+          />
+          <CardProdutcs
+            image={"https://source.unsplash.com/random"}
+            nameProdutc={'Produto x'}
+            price={'60,00'}
+          />
+         
         </Grid>
       </Container>
     </TempleteDefault>
