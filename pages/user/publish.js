@@ -15,7 +15,8 @@ import {
   InputLabel,
   OutlinedInput,
   InputAdornment,
-  MenuItem
+  MenuItem,
+  Input
 } from '@mui/material'
 
 import { useDropzone } from 'react-dropzone';
@@ -33,7 +34,11 @@ const validationSchema = yup.object().shape({
     .max(100,"Título muito grande")
     .required('Campo obrigatório'),
 
-  category: yup.string().required('Campo Obrigatório')  
+  category: yup.string().required('Campo Obrigatório'),
+  
+  description: yup.string()
+    .min(50, 'Escreva uma descrição com pelo menos 50 caracteres')
+    .required('Campo Obrigatório')
 });
 
 export default function Publish(){
@@ -69,6 +74,8 @@ export default function Publish(){
       initialValues={{
         title: '',
         category:'',
+        description:'',
+
       }}
       validationSchema={validationSchema}
       onSubmit={(values)=>{
@@ -95,34 +102,35 @@ export default function Publish(){
               </Container>
 
               <Container maxWidth="md" sx={{ paddingBottom: theme.spacing(3) }}>
-
                 <Box sx={{ bgcolor: theme.palette.background.white, padding: '10px' }}>
-                <Typography component={'h6'} variant="h6" sx={{ marginBottom:'5px' }} color='primary'>
-                    Titulo do Anúncio
-                </Typography>
-                <TextField
-                  name='title'
-                  value={values.title}
-                  onChange={handleChange}
-                  label="ex.: Notebook Lenovo S145 I5"
-                  size='small'
-                  fullWidth
-                  error={errors.title}
-                  helperText={errors.title}
-                />
+                <FormControl  fullWidth error={errors.title}>
+                  <InputLabel sx={{fontWeight: 400, color: theme.palette.primary}}>
+                  Titulo do Anúncio
+                  </InputLabel>
+                  <Input
+                    name='title'
+                    value={values.title}
+                    onChange={handleChange}
+                    />
+                   
+                <FormHelperText>
+                      {errors.title}
+                    </FormHelperText>
+                </FormControl>
                 <br /><br />
-                <Typography component={'h6'} variant="h6" sx={{ marginBottom:'5px' }} color='primary'>
-                    Categoria
-                </Typography>
-
                 <FormControl fullWidth error={errors.category}>
+                  <InputLabel id='categoryLabel' sx={{fontWeight: 400, color: theme.palette.primary.main}}>Categoria</InputLabel>
                   <Select
                     name='category'
                     value={values.category}
                     onChange={handleChange}
                     fullWidth
+                    labelId='categoryLabel'
+                    id='category'
+                    label="Categoria"
+                    variant='outlined'
                     >
-
+                  
                   <MenuItem value={"Bebê e criança"}>Bebê e criança</MenuItem>
                   <MenuItem value={"Agricultura"}>Agricultura</MenuItem>
                   <MenuItem value={"Moda"}>Moda</MenuItem>
@@ -243,17 +251,19 @@ export default function Publish(){
 
       <Container maxWidth="md" sx={{ paddingBottom: theme.spacing(3) }}>
         <Box sx={{ bgcolor: theme.palette.background.white, padding: '10px' }}>
-        <Typography component={'h6'} variant="h6" sx={{ marginBottom:'5px' }} color='primary'>
-           Descrição
-        </Typography>
-        <Typography component={'div'} variant="body2" sx={{ marginBottom:'5px' }} color='primary'>
-          Escreve os detalhes do que está vendendo
-        </Typography>
-        <TextField
+        <FormControl fullWidth error={errors.description}>
+        <InputLabel sx={{fontWeight: 400, color: theme.palette.primary}}>Escreve os detalhes do que está vendendo</InputLabel>
+        <Input
+          name='description'
+          value={values.description}
+          onChange={handleChange}
           multiline
           rows={6}
-          fullWidth
-        />
+          />
+        <FormHelperText>
+          {errors.description}
+        </FormHelperText>
+        </FormControl>
         </Box>
       </Container>
 
