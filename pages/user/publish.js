@@ -1,3 +1,7 @@
+import { useState } from 'react'
+import { Formik } from 'formik';
+import * as yup from 'yup'
+
 import { 
   Container,
   Typography,
@@ -14,12 +18,19 @@ import {
 
 import { useDropzone } from 'react-dropzone';
 
-import { useState } from 'react'
-
 import { DeleteForever } from '@mui/icons-material';
+
+
 
 import TemplateDefault from '../../src/templetes/Default'
 import theme from '../../src/theme';
+
+const validationSchema = yup.object().shape({
+  title: yup.string()
+    .min(6, 'Escreva um título maior')
+    .max(100,"Título muito grande")
+    .required('Campo obrigatório')
+});
 
 export default function Publish(){
   const [files,setFiles] = useState([])
@@ -50,59 +61,83 @@ export default function Publish(){
 
   return(
     <TemplateDefault>
-      <Container maxWidth="sm" sx={{ paddingBottom: theme.spacing(3) }}>
-        <Typography component={'h1'} variant="h2" align='center' color='primary'>
-            Publicar Anúncio!
-        </Typography>
-        <Typography component={'h5'} variant="h5" align='center' color='primary'>
-            Quanto mais detalhado, melhor!
-        </Typography>
-      </Container>
+      <Formik
+      initialValues={{
+        title: '',
+      }}
+      validationSchema={validationSchema}
+      onSubmit={(values)=>{
+        console.log('ok enviou o form',values)
+      }}
+      >
+      {
+        ({
+          values,
+          errors,
+          handleChange,
+          handleSubmit
+        })=>{
+          console.log(errors)
+          return(
+            <form onSubmit={handleSubmit}>
+              <Container maxWidth="sm" sx={{ paddingBottom: theme.spacing(3) }}>
+                <Typography component={'h1'} variant="h2" align='center' color='primary'>
+                    Publicar Anúncio!
+                </Typography>
+                <Typography component={'h5'} variant="h5" align='center' color='primary'>
+                    Quanto mais detalhado, melhor!
+                </Typography>
+              </Container>
 
-      <Container maxWidth="md" sx={{ paddingBottom: theme.spacing(3) }}>
+              <Container maxWidth="md" sx={{ paddingBottom: theme.spacing(3) }}>
 
-        <Box sx={{ bgcolor: theme.palette.background.white, padding: '10px' }}>
-        <Typography component={'h6'} variant="h6" sx={{ marginBottom:'5px' }} color='primary'>
-            Titulo do Anúncio
-        </Typography>
-        <TextField
-          label="ex.: Notebook Lenovo S145 I5"
-          size='small'
-          fullWidth
-        />
-        <br /><br />
-        <Typography component={'h6'} variant="h6" sx={{ marginBottom:'5px' }} color='primary'>
-            Categoria
-        </Typography>
-        <Select
-          native
-          value=""
-          fullWidth
-          onChange={()=> {}}
-          inputProps={{
-            name:'age'
-          }}
-        >
-        <option value="">Selecione</option>
-        <option value="1">Bebê e criança</option>
-        <option value="2">Agricultura</option>
-        <option value="3">Moda</option>
-        <option value="4">Carros, Motos e Barcos</option>
-        <option value="5">Serviços</option>
-        <option value="6">Lazer</option>
-        <option value="7">Animais</option>
-        <option value="8">Moveis, Casa e Jardim</option>
-        <option value="9">Imóveis</option>
-        <option value="10">Equipamentos e ferramentas</option>
-        <option value="10">Celulares e tablets</option>
-        <option value="10">Esporte</option>
-        <option value="10">Tecnologia</option>
-        <option value="10">Emprego</option>
-        <option value="10">Outros</option>
-        </Select>
+                <Box sx={{ bgcolor: theme.palette.background.white, padding: '10px' }}>
+                <Typography component={'h6'} variant="h6" sx={{ marginBottom:'5px' }} color='primary'>
+                    Titulo do Anúncio
+                </Typography>
+                <TextField
+                  name='title'
+                  value={values.title}
+                  onChange={handleChange}
+                  label="ex.: Notebook Lenovo S145 I5"
+                  size='small'
+                  fullWidth
+                  error={errors.title}
+                  helperText={errors.title}
+                />
+                <br /><br />
+                <Typography component={'h6'} variant="h6" sx={{ marginBottom:'5px' }} color='primary'>
+                    Categoria
+                </Typography>
+                <Select
+                  native
+                  value=""
+                  fullWidth
+                  onChange={()=> {}}
+                  inputProps={{
+                    name:'age'
+                  }}
+                >
+                <option value="">Selecione</option>
+                <option value="1">Bebê e criança</option>
+                <option value="2">Agricultura</option>
+                <option value="3">Moda</option>
+                <option value="4">Carros, Motos e Barcos</option>
+                <option value="5">Serviços</option>
+                <option value="6">Lazer</option>
+                <option value="7">Animais</option>
+                <option value="8">Moveis, Casa e Jardim</option>
+                <option value="9">Imóveis</option>
+                <option value="10">Equipamentos e ferramentas</option>
+                <option value="10">Celulares e tablets</option>
+                <option value="10">Esporte</option>
+                <option value="10">Tecnologia</option>
+                <option value="10">Emprego</option>
+                <option value="10">Outros</option>
+                </Select>
 
-        </Box>
-      </Container>
+                </Box>
+              </Container>
 
       <Container maxWidth="md" sx={{ paddingBottom: theme.spacing(3) }}>
         <Box sx={{ bgcolor: theme.palette.background.white, padding: '10px' }}>
@@ -262,10 +297,18 @@ export default function Publish(){
 
       <Container maxWidth="md" sx={{ paddingBottom: theme.spacing(3) }}>
         <Box textAlign={'right'}>
-          <Button variant='contained' color='primary'>Publicar anúncio</Button>
+          <Button type='submit' variant='contained' color='primary'>Publicar anúncio</Button>
         </Box>
       </Container>
+      </form>
 
+          )
+        }
+      }
+
+      </Formik>
+
+      
 
     </TemplateDefault>
   )

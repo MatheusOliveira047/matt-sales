@@ -20,12 +20,14 @@
     "@mui/styles": "^5.10.14",
     "@next/font": "latest",
     "babel-plugin-styled-components": "^2.0.7",
+    "formik": "^2.2.9",
     "next": "latest",
     "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-dropzone": "^14.2.3",
-    "react-material-ui-carousel": "^3.4.2"
+    "react-material-ui-carousel": "^3.4.2",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "eslint": "latest",
