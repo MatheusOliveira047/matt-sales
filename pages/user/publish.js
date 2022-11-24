@@ -38,7 +38,18 @@ const validationSchema = yup.object().shape({
   
   description: yup.string()
     .min(50, 'Escreva uma descrição com pelo menos 50 caracteres')
-    .required('Campo Obrigatório')
+    .required('Campo Obrigatório'),
+
+  price: yup.number()
+    .required('Campo Obrigatório'),
+  
+  name: yup.string()
+    .required('Campo Obrigatório'),
+  phone: yup.number()
+    .required('Campo Obrigatório'),
+  email: yup.string()
+    .email('Digite um email valido')
+    .required('Campo Obrigatório'),
 });
 
 export default function Publish(){
@@ -75,6 +86,10 @@ export default function Publish(){
         title: '',
         category:'',
         description:'',
+        price:'',
+        name:'',
+        phone:'',
+        email:''
 
       }}
       validationSchema={validationSchema}
@@ -269,21 +284,20 @@ export default function Publish(){
 
       <Container maxWidth="md" sx={{ paddingBottom: theme.spacing(3) }}>
         <Box sx={{ bgcolor: theme.palette.background.white, padding: '10px' }}> 
-        <Typography component={'h6'} variant="h6" sx={{ marginBottom:'5px' }} color='primary'>
-           Preço
-        </Typography>
-          <br />
-          <FormControl
-          fullWidth
-          variant='outlined'
-          >
-            <InputLabel>Valor</InputLabel>
-            <OutlinedInput 
-              onChange={()=>{}} 
-              startAdornment={<InputAdornment position='start'>R$</InputAdornment>}
-              labelWidth={40} 
-            />
-          </FormControl>
+        
+        <FormControl fullWidth error={errors.price}>
+        <InputLabel sx={{fontWeight: 400, color: theme.palette.primary}}>Preço</InputLabel>
+        <Input
+          name='price'
+          type='number'
+          value={values.price}
+          onChange={handleChange}
+          startAdornment={<InputAdornment position='start'>R$</InputAdornment>}
+          />
+        <FormHelperText>
+          {errors.price}
+        </FormHelperText>
+        </FormControl>          
         </Box>
       </Container>
 
@@ -293,23 +307,53 @@ export default function Publish(){
           Dados de contato
         </Typography>
 
-        <TextField
-          label="Nome"
-          size='small'
-          fullWidth
-        />
+        <FormControl fullWidth error={errors.name}>
+        <InputLabel 
+        sx={{fontWeight: 400, color: theme.palette.primary}}>
+          Nome
+        </InputLabel>
+        <Input
+          name='name'
+          value={values.name}
+          onChange={handleChange}
+          />
+        <FormHelperText>
+          {errors.name}
+        </FormHelperText>
+        </FormControl>   
+
         <br /><br />
-        <TextField
-          label="E-mail"
-          size='small'
-          fullWidth
-        />
+        <FormControl fullWidth error={errors.phone}>
+        <InputLabel 
+        sx={{fontWeight: 400, color: theme.palette.primary}}>
+          Telefone
+        </InputLabel>
+        <Input
+          name='phone'
+          value={values.phone}
+          onChange={handleChange}
+          />
+        <FormHelperText>
+          {errors.phone}
+        </FormHelperText>
+        </FormControl>  
         <br /><br />
-        <TextField
-          label="Telefone"
-          size='small'
-          fullWidth
-        />
+
+        <FormControl fullWidth error={errors.email}>
+        <InputLabel 
+        sx={{fontWeight: 400, color: theme.palette.primary}}>
+          E-mail
+        </InputLabel>
+        <Input
+          name='email'
+          value={values.email}
+          onChange={handleChange}
+          />
+        <FormHelperText>
+          {errors.email}
+        </FormHelperText>
+        </FormControl>  
+       
         </Box>
       </Container>
 
