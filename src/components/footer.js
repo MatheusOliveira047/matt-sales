@@ -25,26 +25,12 @@ export default function Footer(){
         container 
         spacing={3} 
         >
-        <Grid item xs={6} sm={3}>
+        <Grid item xs={12} sm={12}>
           <Box textAlign={'center'}>
-              Ajuda e contato
+          Copyright © Matheus Oliveira Todos os direitos reservados.
           </Box>
         </Grid>
-        <Grid item xs={6} sm={3}>
-          <Box textAlign={'center'}>
-              Dicas de Segurança
-          </Box>
-        </Grid>
-        <Grid item xs={6} sm={3}>
-          <Box textAlign={'center'}>
-              Anunciar e Vender
-          </Box>
-        </Grid>
-        <Grid item xs={6} sm={3}>
-          <Box textAlign={'center'}>
-              Plano Profissional
-          </Box>
-        </Grid>
+        
       </Grid>
     </Container>
   )
