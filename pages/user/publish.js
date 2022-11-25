@@ -6,14 +6,12 @@ import {
   Container,
   Typography,
   Box,
-  TextField,
   Select,
   Button,
   IconButton,
   FormControl,
   FormHelperText,
   InputLabel,
-  OutlinedInput,
   InputAdornment,
   MenuItem,
   Input
@@ -50,34 +48,11 @@ const validationSchema = yup.object().shape({
   email: yup.string()
     .email('Digite um email valido')
     .required('Campo Obrigatório'),
+
+  files: yup.array().min(1,'Envio pelo menos uma foto').required('Campo obrigatório')
 });
 
 export default function Publish(){
-  const [files,setFiles] = useState([])
-
-
-  const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/*',
-    onDrop: (acceptedFile) =>{
-      const newFiles = acceptedFile.map(file=>{
-        return Object.assign(file,{
-          preview:URL.createObjectURL(file)
-        })
-      })
-
-
-      setFiles([
-        ...files,
-        ...newFiles
-      ])
-    }
-  })
-
-  const handleRemoveFile = (fileName)=>{
-    const newFilesState = files.filter(file => file.name !== fileName)
-    setFiles(newFilesState)
-  }
-
 
   return(
     <TemplateDefault>
@@ -89,7 +64,8 @@ export default function Publish(){
         price:'',
         name:'',
         phone:'',
-        email:''
+        email:'',
+        files: [],
 
       }}
       validationSchema={validationSchema}
@@ -99,12 +75,37 @@ export default function Publish(){
       >
       {
         ({
+          touched,
           values,
           errors,
           handleChange,
-          handleSubmit
+          handleSubmit,
+          setFieldValue,
         })=>{
-          console.log(errors)
+
+          const { getRootProps, getInputProps } = useDropzone({
+            accept: 'image/*',
+            onDrop: (acceptedFile) =>{
+              const newFiles = acceptedFile.map(file=>{
+                return Object.assign(file,{
+                  preview:URL.createObjectURL(file)
+                })
+              })
+        
+              setFieldValue('files',[
+                ...values.files,
+                ...newFiles
+              ])
+            }
+          })
+        
+
+
+          const handleRemoveFile = (fileName)=>{
+            const newFilesState = values.files.filter(file => file.name !== fileName)
+            setFieldValue('files',newFilesState)
+          }
+
           return(
             <form onSubmit={handleSubmit}>
               <Container maxWidth="sm" sx={{ paddingBottom: theme.spacing(3) }}>
@@ -118,7 +119,7 @@ export default function Publish(){
 
               <Container maxWidth="md" sx={{ paddingBottom: theme.spacing(3) }}>
                 <Box sx={{ bgcolor: theme.palette.background.white, padding: '10px' }}>
-                <FormControl  fullWidth error={errors.title}>
+                <FormControl  fullWidth error={touched.title && errors.title ?  errors.title : null}>
                   <InputLabel sx={{fontWeight: 400, color: theme.palette.primary}}>
                   Titulo do Anúncio
                   </InputLabel>
@@ -129,11 +130,11 @@ export default function Publish(){
                     />
                    
                 <FormHelperText>
-                      {errors.title}
+                      {touched.title && errors.title ?  errors.title : null}
                     </FormHelperText>
                 </FormControl>
                 <br /><br />
-                <FormControl fullWidth error={errors.category}>
+                <FormControl fullWidth error={touched.category && errors.category ?  errors.category : null}>
                   <InputLabel id='categoryLabel' sx={{fontWeight: 400, color: theme.palette.primary.main}}>Categoria</InputLabel>
                   <Select
                     name='category'
@@ -163,7 +164,7 @@ export default function Publish(){
                   <MenuItem value={"Outros"}>Outros</MenuItem>
                   </Select>
                   <FormHelperText>
-                    {errors.category}
+                    {touched.category && errors.category ?  errors.category : null}
                   </FormHelperText>
                 </FormControl>
 
@@ -172,12 +173,20 @@ export default function Publish(){
 
       <Container maxWidth="md" sx={{ paddingBottom: theme.spacing(3) }}>
         <Box sx={{ bgcolor: theme.palette.background.white, padding: '10px' }}>
-        <Typography component={'h6'} variant="h6" sx={{ marginBottom:'5px' }} color='primary'>
+        <Typography component={'h6'} variant="h6" sx={{ marginBottom:'5px' }} color={errors.files && touched.files ? 'error' : "textPrimary"}>
            Imagens
         </Typography>
-        <Typography component={'div'} variant="body2" sx={{ marginBottom:'5px' }} color='primary'>
+        <Typography component={'div'} variant="body2" sx={{ marginBottom:'5px' }} color={errors.files && touched.files ? 'error' : "textPrimary"}>
            A primeira imagem é a foto principal do seu anúncio.
         </Typography>
+        {
+          errors.files 
+          ? <Typography variant='body2' color="error" gutterBottom>
+            { touched.title && errors.title ? errors.title : null }
+          </Typography>
+          : null
+        }
+          
         <Box 
           sx={{
             display:'flex',
@@ -191,7 +200,7 @@ export default function Publish(){
               width:200, 
               height:150, 
               backgroundColor: theme.palette.background.default,
-              border:'2px dashed black',
+              border:`2px dashed ${errors.files && touched.files ? 'red' : 'black'}`,
               display:'flex',
               justifyContent:"center",
               alignItems:'center',
@@ -200,13 +209,14 @@ export default function Publish(){
               margin: '0 5px 10px 0'
             }}
           >
-            <input {...getInputProps()}/>
+            <input name="files" {...getInputProps()}/>
 
             <Typography variant='body2'>
               Clique para adicionar ou arraste a ímagem para aqui
             </Typography>
+
           </Box>
-          {files.map((file,index) =>(
+          {values.files.map((file,index) =>(
              <Box
              key={file}
              sx={{
@@ -266,7 +276,7 @@ export default function Publish(){
 
       <Container maxWidth="md" sx={{ paddingBottom: theme.spacing(3) }}>
         <Box sx={{ bgcolor: theme.palette.background.white, padding: '10px' }}>
-        <FormControl fullWidth error={errors.description}>
+        <FormControl fullWidth error={touched.description && errors.description ?  errors.description : null}>
         <InputLabel sx={{fontWeight: 400, color: theme.palette.primary}}>Escreve os detalhes do que está vendendo</InputLabel>
         <Input
           name='description'
@@ -276,7 +286,7 @@ export default function Publish(){
           rows={6}
           />
         <FormHelperText>
-          {errors.description}
+          {touched.description && errors.description ?  errors.description : null}
         </FormHelperText>
         </FormControl>
         </Box>
@@ -285,7 +295,7 @@ export default function Publish(){
       <Container maxWidth="md" sx={{ paddingBottom: theme.spacing(3) }}>
         <Box sx={{ bgcolor: theme.palette.background.white, padding: '10px' }}> 
         
-        <FormControl fullWidth error={errors.price}>
+        <FormControl fullWidth error={touched.price && errors.price ?  errors.price : null}>
         <InputLabel sx={{fontWeight: 400, color: theme.palette.primary}}>Preço</InputLabel>
         <Input
           name='price'
@@ -295,7 +305,7 @@ export default function Publish(){
           startAdornment={<InputAdornment position='start'>R$</InputAdornment>}
           />
         <FormHelperText>
-          {errors.price}
+          {touched.price && errors.price ?  errors.price : null}
         </FormHelperText>
         </FormControl>          
         </Box>
@@ -307,7 +317,7 @@ export default function Publish(){
           Dados de contato
         </Typography>
 
-        <FormControl fullWidth error={errors.name}>
+        <FormControl fullWidth error={touched.name && errors.name ?  errors.name : null}>
         <InputLabel 
         sx={{fontWeight: 400, color: theme.palette.primary}}>
           Nome
@@ -318,12 +328,12 @@ export default function Publish(){
           onChange={handleChange}
           />
         <FormHelperText>
-          {errors.name}
+          {touched.name && errors.name ?  errors.name : null}
         </FormHelperText>
         </FormControl>   
 
         <br /><br />
-        <FormControl fullWidth error={errors.phone}>
+        <FormControl fullWidth error={touched.phone && errors.phone ?  errors.phone : null}>
         <InputLabel 
         sx={{fontWeight: 400, color: theme.palette.primary}}>
           Telefone
@@ -334,12 +344,12 @@ export default function Publish(){
           onChange={handleChange}
           />
         <FormHelperText>
-          {errors.phone}
+          {touched.phone && errors.phone ?  errors.phone : null}
         </FormHelperText>
         </FormControl>  
         <br /><br />
 
-        <FormControl fullWidth error={errors.email}>
+        <FormControl fullWidth error={touched.email && errors.email ?  errors.email : null}>
         <InputLabel 
         sx={{fontWeight: 400, color: theme.palette.primary}}>
           E-mail
@@ -350,7 +360,7 @@ export default function Publish(){
           onChange={handleChange}
           />
         <FormHelperText>
-          {errors.email}
+          {touched.email && errors.email ?  errors.email : null}
         </FormHelperText>
         </FormControl>  
        
