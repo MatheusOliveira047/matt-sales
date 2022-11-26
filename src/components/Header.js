@@ -37,7 +37,7 @@ export default function ButtonAppBar() {
                 Matt Sales
               </Link>
             </Typography>
-            <Link href={"/user/publish"} passHref>
+            <Link href={"/auth/signup"} passHref>
               <Button color="inherit" variant='outlined'>
               Anunciar e Vender
               </Button>
