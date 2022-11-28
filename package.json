@@ -25,6 +25,7 @@
     "formik": "^2.2.9",
     "mongoose": "^6.7.3",
     "next": "latest",
+    "next-auth": "3.27.1",
     "next-connect": "^0.13.0",
     "nodemon": "^2.0.20",
     "prop-types": "latest",

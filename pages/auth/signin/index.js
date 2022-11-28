@@ -4,7 +4,9 @@ import axios from 'axios'
 
 import { useRouter } from 'next/router';
 
-import { CircularProgress ,Grid,Container,Typography, FormControl, Input, InputLabel, FormHelperText,Box, Button } from '@mui/material'
+import {signIn, useSession} from 'next-auth/client'
+
+import { CircularProgress ,Grid,Container,Typography, FormControl, Input, InputLabel, FormHelperText,Box, Button, Alert } from '@mui/material'
 
 import TempleteDefault from '../../../src/templetes/Default'
 
@@ -18,8 +20,17 @@ export default function Signin(){
   const classes = useStyles()
   const router = useRouter()
   const {setToasty} = useToasty()
+  const [ session ] = useSession()
 
-  const handleFormSubmit = async values =>{}
+  console.log(session)
+
+  const handleFormSubmit = values =>{
+    signIn('credentials',{
+      email: values.email,
+      password: values.password,
+      callbackUrl: 'http://localhost:3000/user/dashbord'
+    })
+  }
 
 
   return(
@@ -49,11 +60,19 @@ export default function Signin(){
           isSubmitting
         })=>{
           return(
-            <form onSubmit={handleSubmit} action="/api/users" method='post'>
+            <form onSubmit={handleSubmit}>
             <Container maxWidth="md">
 
 
             <Box className={classes.box}>
+            {
+              router.query.i === 1
+              ? (<Alert
+                  severity='error' >
+                    Usuário ou senha invalidos
+                  </Alert>)
+              : null
+            }
             <FormControl fullWidth error={touched.email && errors.email ?  errors.email : null}>
             <InputLabel className={classes.labelInput}>
               E-mail
