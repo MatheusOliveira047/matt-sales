@@ -14,7 +14,7 @@ import CardProdutcs from '../../src/components/Card';
 
 
 
-export default function Dashbord() {
+const Dashbord = ()=> {
   return (
     <TemplateDefault>
       <Container maxWidth="sm">
@@ -79,3 +79,7 @@ export default function Dashbord() {
     </TemplateDefault>
   );
 }
+
+Dashbord.requireAuth = true
+
+export default Dashbord

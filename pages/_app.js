@@ -9,6 +9,7 @@ import createEmotionCache from '../src/createEmotionCache';
 import { ToastyProvider } from '../src/contexts/Toasty';
 import '../styles/global.css';
 import { Provider } from "next-auth/client"
+import CheckAuth from '../src/components/CheckAuth';
 const clientSideEmotionCache = createEmotionCache();
 
 export default function MyApp(props) {
@@ -24,7 +25,11 @@ export default function MyApp(props) {
         <ThemeProvider theme={theme}>
           <ToastyProvider>
             <CssBaseline />
-            <Component {...pageProps} />
+            {
+              Component.requireAuth 
+              ? <CheckAuth Component={Component} pageProps={pageProps}/>
+              : <Component {...pageProps} />
+            }
           </ToastyProvider>
         </ThemeProvider>
       </Provider>

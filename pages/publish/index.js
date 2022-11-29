@@ -22,7 +22,7 @@ import FileUpload from '../../src/components/FileUpload';
 import {useStyles} from './styles'
 
 
-export default function Publish(){
+const Publish = () => {
   const classes = useStyles()
 
   return(
@@ -231,3 +231,7 @@ export default function Publish(){
     </TemplateDefault>
   )
 }
+
+Publish.requireAuth = true
+
+export default Publish
