@@ -8,7 +8,7 @@ export default NextAuth({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET
     }),
-    
+
     Providers.Credentials({
       name: 'Credentials',
       async authorize(credentials){
@@ -30,8 +30,10 @@ export default NextAuth({
 
   ],
 
+
   session:{
     jwt:true,
+   
   },
 
   jwt: {

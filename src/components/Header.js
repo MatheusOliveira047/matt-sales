@@ -2,6 +2,10 @@ import Link from 'next/link';
 
 import { useState } from 'react';
 
+import { useSession, signOut } from 'next-auth/client'
+
+
+
 import { 
   Container,
   Box,
@@ -25,7 +29,8 @@ export default function ButtonAppBar() {
 
   const openUserMenu = Boolean(anchorUserMenu)
 
-
+  const [session] = useSession()
+  
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -37,20 +42,22 @@ export default function ButtonAppBar() {
                 Matt Sales
               </Link>
             </Typography>
-            <Link href={"/auth/signup"} passHref>
+            <Link href={session ? '/auth/publish' : '/auth/signin'} passHref>
               <Button color="inherit" variant='outlined'>
               Anunciar e Vender
               </Button>
             </Link>
-            <IconButton 
+            {
+              session && (
+                <IconButton 
               color='secondary' 
               onClick={(e) => setAnchorUserMenu(e.currentTarget)}
             >
             {
-              true === false
+              session.user.image
 
               ? <Avatar
-              src={""}
+              src={session.user.image}
               />
 
               : <AccountCircle/>
@@ -62,9 +69,12 @@ export default function ButtonAppBar() {
             sx={{marginLeft: '6px'}}
             
             >
-              Matheus Oliveira
+              {session.user.name}
             </Typography>
             </IconButton>
+              )
+            }
+            
 
             <Menu
               anchorEl={anchorUserMenu}
@@ -78,7 +88,7 @@ export default function ButtonAppBar() {
               <MenuItem>Publicar novo anúncio</MenuItem>
              </Link>
               <Divider/>
-              <MenuItem>Sair</MenuItem>
+              <MenuItem onClick={() => signOut({callbackUrl:'/'})}>Sair</MenuItem>
             </Menu>
 
           </Toolbar>
