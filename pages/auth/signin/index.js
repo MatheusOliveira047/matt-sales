@@ -17,7 +17,7 @@ import useToasty from '../../../src/contexts/Toasty'
 
 import { useStyles } from './styles';
 
-export default function Signin(){
+export default function Signin({APP_URL}){
   const classes = useStyles()
   const router = useRouter()
   const {setToasty} = useToasty()
@@ -29,13 +29,13 @@ export default function Signin(){
     signIn('credentials',{
       email: values.email,
       password: values.password,
-      callbackUrl: 'http://localhost:3000/user/dashbord'
+      callbackUrl: `${APP_URL}/user/dashbord`
     })
   }
 
   const handleGoogleLogin = ()=>{
     signIn('google'),{
-      callbackUrl: 'http://localhost:3000/user/dashbord'
+      callbackUrl: `${APP_URL}/user/dashbord`
     }
   }
 
@@ -138,4 +138,11 @@ export default function Signin(){
         </Formik>
     </TempleteDefault>
   )
+}
+
+
+Signin.getServerSideProps = async function(){
+  return {
+    APP_URL: process.env.APP_URL
+  }
 }
