@@ -4,6 +4,11 @@ import axios from 'axios'
 
 export default NextAuth({
   providers: [
+    Providers.Google({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+    }),
+    
     Providers.Credentials({
       name: 'Credentials',
       async authorize(credentials){
@@ -20,7 +25,8 @@ export default NextAuth({
 
       }
 
-    })
+    }),
+   
 
   ],
 

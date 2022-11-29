@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import axios from 'axios'
 
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 import {signIn, useSession} from 'next-auth/client'
 
@@ -32,6 +33,11 @@ export default function Signin(){
     })
   }
 
+  const handleGoogleLogin = ()=>{
+    signIn('google'),{
+      callbackUrl: 'http://localhost:3000/user/dashbord'
+    }
+  }
 
   return(
     <TempleteDefault>
@@ -43,6 +49,7 @@ export default function Signin(){
                         E anuncie para todo o Brasil
                 </Typography>
       </Container>
+      
 
 
       <Formik
@@ -73,6 +80,19 @@ export default function Signin(){
                   </Alert>)
               : null
             }
+            <Box display="flex" justifyContent="center">
+             <Button color='primary' variant='contained' startIcon={<Image 
+              src="/images/logo_google.png"
+              width={20} 
+              height={20}
+              alt="Login com google"
+             />} onClick={handleGoogleLogin}>Entrar com Google</Button>
+            </Box>
+
+            <Box className={classes.orSeparetor}>
+              <span>ou</span>
+            </Box>
+
             <FormControl fullWidth error={touched.email && errors.email ?  errors.email : null}>
             <InputLabel className={classes.labelInput}>
               E-mail
