@@ -25,7 +25,7 @@ export default function CardProdutcs({image,nameProdutc,price,Actions}){
                     {nameProdutc}
                   </Typography>
                   <Typography>
-                    R$ {price}
+                    {price}
                   </Typography>
                 </CardContent>
                 {Actions && 
