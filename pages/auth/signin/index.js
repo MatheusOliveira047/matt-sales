@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 
-import {signIn, useSession} from 'next-auth/client'
+import {signIn, useSession, } from 'next-auth/client'
 
 import { CircularProgress ,Grid,Container,Typography, FormControl, Input, InputLabel, FormHelperText,Box, Button, Alert } from '@mui/material'
 
@@ -17,7 +17,7 @@ import useToasty from '../../../src/contexts/Toasty'
 
 import { useStyles } from './styles';
 
-export default function Signin({APP_URL}){
+const Signin = ({APP_URL}) => {
   const classes = useStyles()
   const router = useRouter()
   const {setToasty} = useToasty()
@@ -34,9 +34,9 @@ export default function Signin({APP_URL}){
   }
 
   const handleGoogleLogin = ()=>{
-    signIn('google'),{
+    signIn('google',{
       callbackUrl: `${APP_URL}/user/dashbord`
-    }
+    })
   }
 
   return(
@@ -146,3 +146,5 @@ Signin.getServerSideProps = async function(){
     APP_URL: process.env.APP_URL
   }
 }
+
+export default Signin

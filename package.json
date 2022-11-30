@@ -22,6 +22,7 @@
     "axios": "^1.2.0",
     "babel-plugin-styled-components": "^2.0.7",
     "bcrypt": "^5.1.0",
+    "formidable-serverless": "^1.1.1",
     "formik": "^2.2.9",
     "mongoose": "^6.7.3",
     "next": "latest",
