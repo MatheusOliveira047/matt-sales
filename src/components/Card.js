@@ -28,12 +28,7 @@ export default function CardProdutcs({image,nameProdutc,price,Actions}){
                     {price}
                   </Typography>
                 </CardContent>
-                {Actions && 
-                  <CardActions>
-                    <Button size='small' color='primary'>Editar</Button>
-                    <Button size='small' color='primary'>Remover</Button>
-                  </CardActions>
-                }
+                {Actions}
               </Card>
           </Grid>
   )
