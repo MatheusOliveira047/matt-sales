@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-
+import Link from 'next/link';
 import axios from 'axios'
 
 import { useRouter } from 'next/router';
@@ -138,9 +138,9 @@ export default function Signup(){
               ? <CircularProgress className={classes.loading}/>
               : <Button type='submit' fullWidth variant='contained' color='primary'>Cadastrar</Button>
             }
-            <Typography component={'span'} variant="body2" color='primary'>
-              Já tem cadastro, Entre aqui
-            </Typography>
+             <Typography sx={{marginTop: '10px'}} component={'h6'} variant="body2" color='primary'>
+                        Já possui cadastro ? <Link href={'/auth/signin'} passHref>Clique aqui !</Link>
+              </Typography>
  
            
             </Box>
