@@ -12,11 +12,11 @@ import { CircularProgress ,Grid,Container,Typography, FormControl, Input, InputL
 
 import TempleteDefault from '../../../src/templetes/Default'
 
-import {initialValues,validationSchema} from './formValues'
 
 import useToasty from '../../../src/contexts/Toasty'
 
-import { useStyles } from './styles';
+import {initialValues,validationSchema} from '../../../src/FormValidation/formValuesSignin'
+import { useStyles } from '../../../styles/stylesSignin';
 
 const Signin = ({APP_URL}) => {
   const classes = useStyles()

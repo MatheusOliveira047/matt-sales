@@ -19,11 +19,11 @@ import {
   CircularProgress
 } from '@mui/material'
 
-import {initialValues,validationSchema} from './formValues'
 import TemplateDefault from '../../src/templetes/Default'
 import FileUpload from '../../src/components/FileUpload';
 import useToasty from '../../src/contexts/Toasty'
-import {useStyles} from './styles'
+import {initialValues,validationSchema} from '../../src/FormValidation/formValuesPublish'
+import { useStyles } from '../../styles/stylesPublish';
 
 
 

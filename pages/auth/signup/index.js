@@ -8,11 +8,12 @@ import { CircularProgress ,Grid,Container,Typography, FormControl, Input, InputL
 
 import TempleteDefault from '../../../src/templetes/Default'
 
-import {initialValues,validationSchema} from './formValues'
 
 import useToasty from '../../../src/contexts/Toasty'
 
-import { useStyles } from './styles';
+import {initialValues,validationSchema} from '../../../src/FormValidation/formValuesSignup'
+import { useStyles } from '../../../styles/stylesSignup';
+
 
 export default function Signup(){
   const classes = useStyles()
