@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import slugify from 'slugify'
+import { useState } from 'react'
+import { useRouter } from 'next/router'
 import {
   Container,
   Typography,
@@ -22,6 +24,13 @@ import { formatCurrency } from '../src/utils/currency'
 
 
 const Home = ({products})=>{
+  const [search, setSearch] = useState()
+  const router = useRouter()
+
+  const handleSearch = ()=>{
+   return router.push(`/search/${search}`)
+  }
+
   return(
     <TempleteDefault>
       <Container maxWidth="md" >
@@ -40,8 +49,9 @@ const Home = ({products})=>{
         <InputBase
         fullWidth
         placeholder="Ex... Iphone XS com garantia"
+        onChange={(e)=> setSearch(e.target.value)}
       />
-      <IconButton type="button" sx={{ p: '10px' }}>
+      <IconButton onClick={handleSearch} type="button" sx={{ p: '10px' }}>
         <SearchIcon />
       </IconButton>
         </Paper>
@@ -55,6 +65,7 @@ const Home = ({products})=>{
       <Typography component={'h2'} variant="h4" align='center'>
          Destaques
         </Typography>
+        <br /><br />
       <Grid container spacing={4}>
         {
           products.map(product=>{
