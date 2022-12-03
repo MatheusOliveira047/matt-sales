@@ -89,6 +89,7 @@ const List = ({products,q})=>{
 }
 
 export async function getServerSideProps({query}){
+ try {
   const { q } = query
 
   await dbConnect()
@@ -116,6 +117,9 @@ export async function getServerSideProps({query}){
       q
     }
   }
+ } catch (error) {
+  console.log(error)
+ }
 }
 
 export default List

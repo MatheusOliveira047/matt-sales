@@ -98,8 +98,9 @@ const Home = ({products})=>{
 }
 
 export async function getServerSideProps(){
- // await dbConnect()
-
+ 
+  try {
+    await dbConnect()
   const products = await ProductsModel.aggregate([{
     $sample: {size : 6},
   }])
@@ -108,6 +109,9 @@ export async function getServerSideProps(){
     props:{
       products: JSON.parse(JSON.stringify(products))
     }
+  }
+  } catch (error) {
+    console.log(error)
   }
 }
 
