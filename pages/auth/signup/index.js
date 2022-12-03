@@ -20,17 +20,25 @@ export default function Signup(){
   const {setToasty} = useToasty()
 
   const handleFormSubmit = async values =>{
-    const response = await axios.post('/api/users', values)
 
-    if(response.data.success){
+    try {
+      const response = await axios.post('/api/users', values)
+      if(response.data.success){
+        setToasty({
+          open:true,
+          text:"Usário cadastrado com sucesso!",
+          severity: 'success'
+        })
+        return router.push('/auth/signin')
+      }
+    } catch (error) {
       setToasty({
         open:true,
-        text:"Usário cadastrado com sucesso",
-        severity: 'success'
+        text:"Usário já existe!",
+        severity: 'error'
       })
-      router.push('/auth/signin')
+      console.log(error)
     }
-  
   }
 
 

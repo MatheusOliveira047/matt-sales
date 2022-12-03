@@ -23,9 +23,7 @@ import {initialValues,validationSchema} from './formValues'
 import TemplateDefault from '../../src/templetes/Default'
 import FileUpload from '../../src/components/FileUpload';
 import useToasty from '../../src/contexts/Toasty'
-
 import {useStyles} from './styles'
-
 
 
 
@@ -104,6 +102,7 @@ const Publish = ({userId, image}) => {
             <form onSubmit={handleSubmit}>
               <Input type='hidden' name="userId" value={values.userId}/>
               <Input type='hidden' name="image" value={values.image}/>
+           
 
               <Container maxWidth="sm" className={classes.container}>
                 <Typography component={'h1'} variant="h2" align='center' color='primary'>
@@ -264,6 +263,36 @@ const Publish = ({userId, image}) => {
           />
         <FormHelperText>
           {touched.email && errors.email ?  errors.email : null}
+        </FormHelperText>
+        </FormControl>  
+        <br /><br />
+
+        <FormControl fullWidth error={touched.uf && errors.uf ?  errors.uf : null}>
+        <InputLabel className={classes.labelInput}>
+          Estado
+        </InputLabel>
+        <Input
+          name='uf'
+          value={values.uf}
+          onChange={handleChange}
+          />
+        <FormHelperText>
+          {touched.uf && errors.uf ?  errors.uf : null}
+        </FormHelperText>
+        </FormControl>  
+        <br /><br />
+
+        <FormControl fullWidth error={touched.city && errors.city ?  errors.city : null}>
+        <InputLabel className={classes.labelInput}>
+          Cidade
+        </InputLabel>
+        <Input
+          name='city'
+          value={values.city}
+          onChange={handleChange}
+          />
+        <FormHelperText>
+          {touched.city && errors.city ?  errors.city : null}
         </FormHelperText>
         </FormControl>  
        

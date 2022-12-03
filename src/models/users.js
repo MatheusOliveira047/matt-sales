@@ -7,7 +7,8 @@ const schema = new mongoose.Schema({
   },
   email:{
     type: String,
-    required: [true, 'O Campo "Email" é obrigatório']
+    required: [true, 'O Campo "Email" é obrigatório'],
+    unique: true
   },
   password:{
     type: String,

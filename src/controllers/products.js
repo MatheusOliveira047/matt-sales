@@ -3,6 +3,7 @@ import ProductsModel from '../models/products'
 import path from 'path'
 import fs from 'fs'
 import formdable from 'formidable-serverless'
+import {dataAtual} from '../utils/date'
 
 const get = async (req,res)=>{
   await dbConnect()
@@ -54,8 +55,8 @@ const post = async (req,res )=>{
       const extension = path.extname(file.name)
       const filename = `${timeStamp}_${random}${extension}`
 
-      const oldpath = path.join(__dirname, '../../../../' + file.path)
-      const newpath = path.join(__dirname, '../../../../' + form.uploadDir + '/' + filename)
+      const oldpath = path.join(__dirname, '../../../../../' + file.path)
+      const newpath = path.join(__dirname, '../../../../../' + form.uploadDir + '/' + filename)
 
       filesToSave.push({
        name: filename,
@@ -79,7 +80,9 @@ const post = async (req,res )=>{
       email,
       phone,
       userId,
-      image 
+      image,
+      uf,
+      city, 
     } = fields
 
     const product = new ProductsModel({
@@ -87,6 +90,11 @@ const post = async (req,res )=>{
       category,
       description,
       price,
+      date: dataAtual,
+      location:{
+        uf,
+        city
+      },
       user:{
         name,
         email,

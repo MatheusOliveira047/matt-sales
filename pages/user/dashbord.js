@@ -94,8 +94,15 @@ const Dashbord = ({products})=> {
 
       </Container>
       <Container maxWidth="md"> 
-        <Grid container spacing={4}>
+         {
+            products.length === 0 &&
+            <Typography gutterBottom component="div" variant='body1' align="center" color="textPrimary">
+              Nenhum Anúncio Publicado
+            </Typography>
+          }
 
+        <Grid container spacing={4}>
+          
          {
           products.map(product =>{
             if(removedProducts.includes(product._id)) return null

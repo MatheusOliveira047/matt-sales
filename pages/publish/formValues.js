@@ -17,6 +17,10 @@ export const validationSchema = yup.object().shape({
   
   name: yup.string()
     .required('Campo Obrigatório'),
+  uf: yup.string()
+    .required('Campo Obrigatório'),
+  city: yup.string()
+    .required('Campo Obrigatório'),
   phone: yup.number()
     .required('Campo Obrigatório'),
   email: yup.string()
@@ -34,6 +38,8 @@ export const initialValues = {
   name:'',
   phone:'',
   email:'',
+  city:'',
+  uf:'',
   files: [],
 
 }

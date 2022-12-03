@@ -1,12 +1,14 @@
 import { Container, Grid, Box, Typography, Chip, Card, CardHeader,Button ,Avatar, CardMedia, Paper } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 
-import TempleteDefault from '../../src/templetes/Default'
-import theme from '../../src/theme';
+import TempleteDefault from '../../../src/templetes/Default'
+import theme from '../../../src/theme';
+import dbConnect from '../../../src/utils/dbConnect'
+import ProductsModel from '../../../src/models/products'
+import { formatCurrency } from '../../../src/utils/currency';
 
 
-
-export default function Produtcs(){
+const Produtc = ({product})=>{
   return(
     <TempleteDefault>
       <Container maxWidth="lg">
@@ -28,33 +30,25 @@ export default function Produtcs(){
                 }
             }} 
               >
+                {
+                  product.files.map(file=> (
+                    <Card 
+                    sx={{
+                      height:'100%'
+                    }}
+                    key={file.name}
+                    >
+                      <CardMedia
+                        sx={{
+                          paddingTop:'56%'
+                        }}
+                        image={`/uploads/${file.name}`}
+                        title={product.title}
+                      />
+                    </Card>
+                  ))
+                }
 
-              <Card 
-              sx={{
-                height:'100%'
-              }}
-              >
-                <CardMedia
-                  sx={{
-                    paddingTop:'56%'
-                  }}
-                  image="https://source.unsplash.com/random?a=2"
-                  title="titulo"
-                />
-              </Card>
-              <Card 
-              sx={{
-                height:'100%'
-              }}
-              >
-                <CardMedia
-                  sx={{
-                    paddingTop:'56%'
-                  }}
-                  image="https://source.unsplash.com/random?a=1"
-                  title="titulo"
-                />
-              </Card>
               </Carousel>
 
             </Box>
@@ -69,7 +63,7 @@ export default function Produtcs(){
                <Typography component="span"
                variant='caption' 
                > 
-               Publicado 16 junho de 2021
+               Publicado {product.date}
                </Typography>
 
                <Typography 
@@ -79,7 +73,7 @@ export default function Produtcs(){
                   margin: "15px 0"
                 }}
                >
-                Jaguar XE 2.0 D R-Sport Aut.
+               {product.title}
                </Typography>
 
                <Typography 
@@ -90,9 +84,9 @@ export default function Produtcs(){
                   marginBottom: '15px'
                 }}
                >
-                50.000,00
+                {formatCurrency(product.price)}
                </Typography>
-               <Chip label="categoria"/>
+               <Chip label={product.category}/>
             </Box>
             <Box
             sx={{
@@ -111,7 +105,7 @@ export default function Produtcs(){
                 component={"p"}
                 variant="body2"
                >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore voluptates aspernatur rerum repellendus voluptatum! Porro, amet delectus! At corporis quod nesciunt vero quasi maiores hic totam quaerat quae rerum! Qui? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam exercitationem veritatis molestiae, blanditiis aliquid architecto magnam voluptatibus sit nisi harum sunt est consequatur enim incidunt repellendus possimus pariatur, numquam perferendis.
+               {product.description}
                </Typography>
 
                
@@ -129,14 +123,20 @@ export default function Produtcs(){
              >
               <CardHeader 
                 avatar={
-                  <Avatar>M</Avatar>
+                  <Avatar src={product.user.image}>
+                    { product.user.image === null
+                      ? product.user.name[0]
+                      : product.user.image 
+                      
+                      }
+                  </Avatar>
                 }
-                title="Matheus Oliveira"
-                subheader="ludsonmatheus@gmail.com"
+                title={product.user.name}
+                subheader={product.user.email}
               />
               <CardMedia 
-                image={"https://source.unsplash.com/random"}
-                title="Matheus Oliveira"
+                image={product.user.image}
+                title={product.user.name}
               />
 
               
@@ -152,7 +152,7 @@ export default function Produtcs(){
               <Typography component="h5"
                variant='h5' 
                > 
-               Localização
+               {product.location.city} - {product.location.uf[0]}{product.location.uf[1]}
                </Typography>
              </Box>
 
@@ -162,3 +162,20 @@ export default function Produtcs(){
     </TempleteDefault>
   )
 }
+
+export async function getServerSideProps({query}){
+  const {id} = query
+
+  await dbConnect()
+
+  const product = await ProductsModel.findOne({_id: id})
+
+  return {
+    props:{
+      product: JSON.parse(JSON.stringify(product))
+    }
+  }
+}
+
+
+export default Produtc
