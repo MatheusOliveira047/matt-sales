@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import slugify from 'slugify';
+
 import { 
   Container,
   Typography,
