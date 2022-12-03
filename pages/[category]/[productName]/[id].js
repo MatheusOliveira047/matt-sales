@@ -132,7 +132,7 @@ const Produtc = ({product})=>{
                   </Avatar>
                 }
                 title={product.user.name}
-                subheader={product.user.email}
+                subheader={product.user.phone}
               />
               <CardMedia 
                 image={product.user.image}

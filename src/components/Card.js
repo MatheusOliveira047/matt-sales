@@ -10,7 +10,7 @@ import {
 
 export default function CardProdutcs({image,nameProdutc,price,Actions}){
   return(
-    <Grid item xs={12} sm={6} md={4}>
+   
               <Card>
                 <CardMedia
                   sx={{
@@ -30,6 +30,6 @@ export default function CardProdutcs({image,nameProdutc,price,Actions}){
                 </CardContent>
                 {Actions}
               </Card>
-          </Grid>
+      
   )
 }

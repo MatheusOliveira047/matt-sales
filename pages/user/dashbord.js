@@ -108,6 +108,7 @@ const Dashbord = ({products})=> {
             if(removedProducts.includes(product._id)) return null
 
             return(
+              <Grid item xs={12} sm={6} md={4}>
               <CardProdutcs
               key={product._id}
               image={`/uploads/${product.files[0].name}`}
@@ -120,6 +121,7 @@ const Dashbord = ({products})=> {
                 </CardActions>
               }
             />
+            </Grid>
             )
           })
          } 
