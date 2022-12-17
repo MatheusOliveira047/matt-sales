@@ -325,7 +325,7 @@ const Publish = ({userId, image}) => {
 
 Publish.requireAuth = true
 
-export async function getServerSideProps({req}){
+export async function getStaticProps({req}){
   const {userId, user} = await getSession({req})
 
   return{

@@ -19,6 +19,9 @@ import {initialValues,validationSchema} from '../../../src/FormValidation/formVa
 import { useStyles } from '../../../styles/stylesSignin';
 
 
+
+
+
 const Signin = ({APP_URL}) => {
   const classes = useStyles()
   const router = useRouter()
@@ -31,13 +34,13 @@ const Signin = ({APP_URL}) => {
     signIn('credentials',{
       email: values.email,
       password: values.password,
-      callbackUrl: `https://matt-sales.vercel.app/user/dashbord`
+      callbackUrl: `${APP_URL}/user/dashbord`
     })
   }
 
   const handleGoogleLogin = ()=>{
     signIn('google',{
-      callbackUrl: `https://matt-sales.vercel.app/user/dashbord`
+      callbackUrl: `${APP_URL}/user/dashbord`
     })
   }
 
@@ -144,6 +147,12 @@ const Signin = ({APP_URL}) => {
     </TempleteDefault>
   )
 }
+
+export const getStaticProps = ()=>({
+  props:{
+    APP_URL: process.env.APP_URL
+  }
+})
 
 
 export default Signin

@@ -97,7 +97,7 @@ const Home = ({products})=>{
 
 }
 
-export async function getServerSideProps(){
+export async function getStaticProps(){
  
   try {
     await dbConnect()

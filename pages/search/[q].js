@@ -88,7 +88,7 @@ const List = ({products,q})=>{
   )
 }
 
-export async function getServerSideProps({query}){
+export async function getStaticProps({query}){
  try {
   const { q } = query
 
