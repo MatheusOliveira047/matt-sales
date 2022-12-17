@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Formik } from 'formik';
 import axios from 'axios'
 import { useRouter } from 'next/router';
-import {getSession } from 'next-auth/client'
+import { getSession } from 'next-auth/client'
 
 import { 
   Container,
@@ -24,6 +24,7 @@ import FileUpload from '../../src/components/FileUpload';
 import useToasty from '../../src/contexts/Toasty'
 import {initialValues,validationSchema} from '../../src/FormValidation/formValuesPublish'
 import { useStyles } from '../../styles/stylesPublish';
+
 
 
 
@@ -325,15 +326,25 @@ const Publish = ({userId, image}) => {
 
 Publish.requireAuth = true
 
-async function mySession(){
-  const session = await getSession()
-  console.log(session)
-}
-mySession()
-
-
-export async function getServerSideProps({req}){
+Publish.getInitialProps = async ({req})=>{
   const {userId, user} = await getSession({req})
+  
+  return{
+    props:{
+      userId,
+      image: user.image,
+    }
+  }
+}
+
+/*
+export async function getServerSideProps({req,res}){
+  const {userId, user} = await getSession({req})
+
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59'
+  )
 
   return{
     props:{
@@ -342,5 +353,6 @@ export async function getServerSideProps({req}){
     }
   }
 }
+* */
 
 export default Publish

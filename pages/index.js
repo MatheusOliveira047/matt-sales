@@ -2,6 +2,7 @@ import Link from 'next/link'
 import slugify from 'slugify'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { GetStaticProps } from 'next'
 import {
   Container,
   Typography,
@@ -97,7 +98,7 @@ const Home = ({products})=>{
 
 }
 
-export async function getStaticProps(){
+export const getStaticProps: GetStaticProps = async ()=>{
  
   try {
     await dbConnect()
@@ -108,7 +109,8 @@ export async function getStaticProps(){
   return{
     props:{
       products: JSON.parse(JSON.stringify(products))
-    }
+    },
+    revalidate: 10
   }
   } catch (error) {
     console.log(error)
