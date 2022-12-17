@@ -18,6 +18,7 @@ import useToasty from '../../../src/contexts/Toasty'
 import {initialValues,validationSchema} from '../../../src/FormValidation/formValuesSignin'
 import { useStyles } from '../../../styles/stylesSignin';
 
+
 const Signin = ({APP_URL}) => {
   const classes = useStyles()
   const router = useRouter()
@@ -30,13 +31,13 @@ const Signin = ({APP_URL}) => {
     signIn('credentials',{
       email: values.email,
       password: values.password,
-      callbackUrl: `${APP_URL}/user/dashbord`
+      callbackUrl: `https://matt-sales.vercel.app/user/dashbord`
     })
   }
 
   const handleGoogleLogin = ()=>{
     signIn('google',{
-      callbackUrl: `${APP_URL}/user/dashbord`
+      callbackUrl: `https://matt-sales.vercel.app/user/dashbord`
     })
   }
 
@@ -144,11 +145,5 @@ const Signin = ({APP_URL}) => {
   )
 }
 
-
-export const getServerSideProps = ()=>({
-  props:{
-    APP_URL: process.env.APP_URL
-  }
-})
 
 export default Signin
