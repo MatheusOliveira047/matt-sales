@@ -1,14 +1,18 @@
 import { Container, Grid, Box, Typography, Chip, Card, CardHeader,Button ,Avatar, CardMedia, Paper } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 
+
 import TempleteDefault from '../../../src/templetes/Default'
 import theme from '../../../src/theme';
 import dbConnect from '../../../src/utils/dbConnect'
 import ProductsModel from '../../../src/models/products'
 import { formatCurrency } from '../../../src/utils/currency';
 
+import { useRouter } from 'next/router';
 
 const Produtc = ({product})=>{
+ 
+
   return(
     <TempleteDefault>
       <Container maxWidth="lg">
@@ -163,7 +167,13 @@ const Produtc = ({product})=>{
   )
 }
 
-export async function getServerSideProps({query}){
+
+export async function getServerSideProps({query,res}){
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59'
+  )
+
   const {id} = query
 
   await dbConnect()

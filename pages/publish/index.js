@@ -325,6 +325,13 @@ const Publish = ({userId, image}) => {
 
 Publish.requireAuth = true
 
+async function mySession(){
+  const session = await getSession()
+  console.log(session)
+}
+mySession()
+
+
 export async function getServerSideProps({req}){
   const {userId, user} = await getSession({req})
 
