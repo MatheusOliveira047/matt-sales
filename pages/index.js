@@ -75,7 +75,7 @@ const Home = ({products})=>{
             
             return(
             <Grid item xs={12} sm={6} md={4}>
-            <Link href={`/${category}/${title}/${product._id}`} passHref>
+            <Link href={`produto/${product._id}`} passHref>
                 <CardProdutcs
                   key={product._id}
                   image={`/uploads/${product.files[0].name}`}
@@ -98,7 +98,7 @@ const Home = ({products})=>{
 
 }
 
-export const getStaticProps: GetStaticProps = async ()=>{
+export async function getStaticProps(){
  
   try {
     await dbConnect()

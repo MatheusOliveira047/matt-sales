@@ -161,17 +161,25 @@ const Dashbord = ({products})=> {
 
 Dashbord.requireAuth = true
 
-export async function getServerSideProps({req}){
+
+export async function getServerSideProps({req,res}){
   const session = await getSession({req})
   await dbConnect()
-  const Products =  await ProductsModel.find({'user.id': session.userId})
-  const products = JSON.parse(JSON.stringify(Products))
+  
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59'
+    )
+    
+    const Products =  await ProductsModel.find({'user.id': session.userId})
+    const products = JSON.parse(JSON.stringify(Products))
 
-  return {
-    props:{
-      products
+    return {
+      props:{
+        products
+      }
     }
   }
-}
+  
 
 export default Dashbord

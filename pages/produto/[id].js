@@ -2,11 +2,11 @@ import { Container, Grid, Box, Typography, Chip, Card, CardHeader,Button ,Avatar
 import Carousel from 'react-material-ui-carousel';
 
 
-import TempleteDefault from '../../../src/templetes/Default'
-import theme from '../../../src/theme';
-import dbConnect from '../../../src/utils/dbConnect'
-import ProductsModel from '../../../src/models/products'
-import { formatCurrency } from '../../../src/utils/currency';
+import TempleteDefault from '../../src/templetes/Default'
+import theme from '../../src/theme';
+import dbConnect from '../../src/utils/dbConnect'
+import ProductsModel from '../../src/models/products'
+import { formatCurrency } from '../../src/utils/currency';
 
 import { useRouter } from 'next/router';
 
@@ -167,23 +167,41 @@ const Produtc = ({product})=>{
   )
 }
 
-
-export async function getServerSideProps({query,res}){
-  res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=10, stale-while-revalidate=59'
-  )
-
-  const {id} = query
-
+export async function getStaticPaths(){
   await dbConnect()
 
+  const products = await ProductsModel.find()
+
+  const paths = products.map(product=>{
+    return {
+      params: {
+        id:product._id.toString(),
+      }
+    }
+  })
+
+  return { 
+    paths,
+    fallback: false,
+  }
+}
+
+
+export async function getStaticProps(context){
+  
+  const {id} = context.params
+
+  
+  await dbConnect()
+  
+  console.log(context.params)
   const product = await ProductsModel.findOne({_id: id})
 
   return {
     props:{
       product: JSON.parse(JSON.stringify(product))
-    }
+    },
+    revalidate:10
   }
 }
 

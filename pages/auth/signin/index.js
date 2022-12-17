@@ -22,7 +22,7 @@ import { useStyles } from '../../../styles/stylesSignin';
 
 
 
-const Signin = ({APP_URL}) => {
+const Signin = () => {
   const classes = useStyles()
   const router = useRouter()
   const {setToasty} = useToasty()
@@ -34,13 +34,13 @@ const Signin = ({APP_URL}) => {
     signIn('credentials',{
       email: values.email,
       password: values.password,
-      callbackUrl: `${APP_URL}/user/dashbord`
+      callbackUrl: `http://localhost:3000/user/dashbord`
     })
   }
 
   const handleGoogleLogin = ()=>{
     signIn('google',{
-      callbackUrl: `${APP_URL}/user/dashbord`
+      callbackUrl: `http://localhost:3000/user/dashbord`
     })
   }
 
@@ -148,11 +148,7 @@ const Signin = ({APP_URL}) => {
   )
 }
 
-export const getStaticProps = ()=>({
-  props:{
-    APP_URL: process.env.APP_URL
-  }
-})
+
 
 
 export default Signin
